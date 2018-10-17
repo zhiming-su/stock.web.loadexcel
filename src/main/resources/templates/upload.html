@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Stock control</title>
+<link rel="stylesheet" type="text/css" media="all"
+	th:href="@{/css/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{js/main.js}" charset="UTF-8"></script>
+</head>
+<body>
+
+	<div class="container">
+
+		<form class="form-horizontal" method="POST"
+			th:action="@{/upload}+ '?' + ${_csrf.parameterName} + '=' + ${_csrf.token}"
+			enctype="multipart/form-data">
+
+
+
+
+
+			<div class="row col-sm-20">
+
+				<div class="col-sm-3">
+					<input type="file" name="file" id="fileId" />
+				</div>
+				<div class="col-sm-3">
+					<select name="type" class="form-control">
+						<option th:each="list : ${stockType}" th:value="${list}"
+							th:utext="${list}"></option>
+					</select>
+				</div>
+				<div class="col-sm-3">
+					<input class="btn btn-success" type="submit" onclick="return clearn()" value="Submit" />
+				</div>
+
+
+
+			</div>
+			
+		</form>
+
+	</div>
+</body>
+</html>
