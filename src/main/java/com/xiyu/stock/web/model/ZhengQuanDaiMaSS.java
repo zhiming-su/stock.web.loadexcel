@@ -7,7 +7,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ZHENGQUAN_DAIMA_copy")
+@Table(name = "ZHENGQUAN_DAIMA")
 @IdClass(PrimaryKeyZhengQuanDaiMa.class)
 public class ZhengQuanDaiMaSS {
 

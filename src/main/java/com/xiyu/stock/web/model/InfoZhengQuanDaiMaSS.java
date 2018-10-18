@@ -7,9 +7,9 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ZHENGQUAN_DAIMA")
+@Table(name = "INFO_ZHENGQUAN_DAIMA",catalog="ZhiNengShenHe")
 @IdClass(PrimaryKeyZhengQuanDaiMa.class)
-public class ZhengQuanDaiMaSF {
+public class InfoZhengQuanDaiMaSS {
 
 	@Id
 	@Column(name = "ZHENGQUAN_ID")
@@ -23,20 +23,17 @@ public class ZhengQuanDaiMaSF {
 	@Column(name = "IsValid")
 	private String IsValid;
 
-	@Column(name = "PINYIN_JC")
-	private String PINYIN_JC;
+	@Column(name = "SHANGSHI_RI")
+	private String SHANGSHI_RI;
 
-	@Column(name = "GONGSI_ID")
-	private String GONGSI_ID;
+	@Column(name = "TUISHI_RI" )
+	private String TUISHI_RI;
 
-	@Column(name = "JIAOYI_DD")
-	private String JIAOYI_DD;
+	@Column(name = "ZHUANRANG_FS")
+	private String ZHUANRANG_FS;
 
-	@Column(name = "ZHENGQUAN_LX")
-	private String ZHENGQUAN_LX;
-
-	@Column(name = "JIAOYI_ID")
-	private String JIAOYI_ID;
+	@Column(name = "FENCENG_ZT")
+	private String FENCENG_ZT;
 
 	@Column(name = "SHANGSHI_ZT")
 	private String SHANGSHI_ZT;
@@ -68,44 +65,36 @@ public class ZhengQuanDaiMaSF {
 		IsValid = isValid;
 	}
 
-	public String getPINYIN_JC() {
-		return PINYIN_JC;
+	public String getSHANGSHI_RI() {
+		return SHANGSHI_RI;
 	}
 
-	public void setPINYIN_JC(String pINYIN_JC) {
-		PINYIN_JC = pINYIN_JC;
+	public void setSHANGSHI_RI(String sHANGSHI_RI) {
+		SHANGSHI_RI = sHANGSHI_RI;
 	}
 
-	public String getGONGSI_ID() {
-		return GONGSI_ID;
+	public String getTUISHI_RI() {
+		return TUISHI_RI;
 	}
 
-	public void setGONGSI_ID(String gONGSI_ID) {
-		GONGSI_ID = gONGSI_ID;
+	public void setTUISHI_RI(String tUISHI_RI) {
+		TUISHI_RI = tUISHI_RI;
 	}
 
-	public String getJIAOYI_DD() {
-		return JIAOYI_DD;
+	public String getZHUANRANG_FS() {
+		return ZHUANRANG_FS;
 	}
 
-	public void setJIAOYI_DD(String jIAOYI_DD) {
-		JIAOYI_DD = jIAOYI_DD;
+	public void setZHUANRANG_FS(String zHUANRANG_FS) {
+		ZHUANRANG_FS = zHUANRANG_FS;
 	}
 
-	public String getZHENGQUAN_LX() {
-		return ZHENGQUAN_LX;
+	public String getFENCENG_ZT() {
+		return FENCENG_ZT;
 	}
 
-	public void setZHENGQUAN_LX(String zHENGQUAN_LX) {
-		ZHENGQUAN_LX = zHENGQUAN_LX;
-	}
-
-	public String getJIAOYI_ID() {
-		return JIAOYI_ID;
-	}
-
-	public void setJIAOYI_ID(String jIAOYI_ID) {
-		JIAOYI_ID = jIAOYI_ID;
+	public void setFENCENG_ZT(String fENCENG_ZT) {
+		FENCENG_ZT = fENCENG_ZT;
 	}
 
 	public String getSHANGSHI_ZT() {
@@ -123,5 +112,6 @@ public class ZhengQuanDaiMaSF {
 	public void setMARK_ID(String mARK_ID) {
 		MARK_ID = mARK_ID;
 	}
+
 
 }

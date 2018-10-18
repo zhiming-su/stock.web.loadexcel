@@ -18,6 +18,10 @@ import com.xiyu.stock.web.model.FileInfo;
 import com.xiyu.stock.web.model.GongSiDaiMa;
 import com.xiyu.stock.web.repository.GongSiDaiMaRepository;
 import com.xiyu.stock.web.repository.GongSiHangYeRepository;
+import com.xiyu.stock.web.repository.InfoGongSiDaiMaRepository;
+import com.xiyu.stock.web.repository.InfoGongSiHangYeRepository;
+import com.xiyu.stock.web.repository.InfoZhengQuanDaiMaSFRepository;
+import com.xiyu.stock.web.repository.InfoZhengQuanDaiMaSSRepository;
 import com.xiyu.stock.web.repository.ZhengQuanDaiMaSFRepository;
 import com.xiyu.stock.web.repository.ZhengQuanDaiMaSSRepository;
 import com.xiyu.stock.web.util.GongSiDaiMaExcel;
@@ -47,6 +51,18 @@ public class SchedulixSecurityCodeJob {
 	
 	@Autowired
 	private GongSiDaiMaRepository gsdmr;
+	
+	@Autowired
+	private InfoGongSiHangYeRepository igshyr;
+	
+	@Autowired
+	private InfoZhengQuanDaiMaSFRepository izqdmsfr;
+	
+	@Autowired
+	private InfoZhengQuanDaiMaSSRepository izqdmssr;
+	
+	@Autowired
+	private InfoGongSiDaiMaRepository igsdmr;
 
 	//private SecurityCodeExcel sce = new SecurityCodeExcel();
 	
@@ -74,12 +90,15 @@ public class SchedulixSecurityCodeJob {
 					switch (fi.getFileType()) {
 					case "证券代码更新": 						
 						zqdmssr.saveAll(zqdmsse.read(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
+						izqdmssr.saveAll(zqdmsse.readInfo(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
 						break;
 					case "证券代码新增": 
 						zqdmsfr.saveAll(zqdmsfe.read(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
+						izqdmsfr.saveAll(zqdmsfe.readInfo(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
 						break;
 					case "公司行业分类": 
 						gshyr.saveAll(gshye.read(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
+						igshyr.saveAll(gshye.readInfo(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
 						break; 
 					case "公司代码更新": 
 						ArrayList<GongSiDaiMa> al=(ArrayList<GongSiDaiMa>) gsdme.read(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString());
@@ -87,9 +106,11 @@ public class SchedulixSecurityCodeJob {
 						for(GongSiDaiMa gsInfo : al) {
 							//id.append("'"+gsInfo.getGONGSI_ID()+"',");
 							gsdmr.delByGongSiID(gsInfo.getGONGSI_ID());
+							igsdmr.delByGongSiID(gsInfo.getGONGSI_ID());
 						}
 						//gsdmr.delByGongSiID(id.toString().replaceAll(",$", ""));
 						gsdmr.saveAll(gsdme.read(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
+						igsdmr.saveAll(gsdme.readInfo(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
 						break; 
 
 					}

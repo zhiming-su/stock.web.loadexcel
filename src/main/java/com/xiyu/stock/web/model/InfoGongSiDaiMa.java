@@ -7,9 +7,9 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "GONGSI_DAIMA")
+@Table(name = "INFO_GONGSI_DAIMA",catalog="ZhiNengShenHe")
 @IdClass(PrimaryKeyGongSiDaiMa.class)
-public class GongSiDaiMa {
+public class InfoGongSiDaiMa {
 
 	@Id
 	@Column(name = "GONGSI_ID")
