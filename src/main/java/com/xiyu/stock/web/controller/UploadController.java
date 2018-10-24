@@ -1,6 +1,7 @@
 package com.xiyu.stock.web.controller;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,8 @@ public class UploadController {
 	
 	//private SecurityCodeExcel sce = new SecurityCodeExcel();
     //Save the uploaded file to this folder
-	public static String UPLOADED_FOLDER = "F://temp//";
+	@Value("${stock.file.path}")
+	public static String UPLOADED_FOLDER;
 
     
     @RequestMapping(path = "/")

@@ -26,7 +26,7 @@ public class ZhengQuanDaiMaSSExcel {
 			Sheet sheet = workbook.getSheetAt(page);
 
 			for (Row row : sheet) {
-				if (row.getRowNum() >= 1) {
+				if (row.getRowNum() >= 1 && row.getCell(0).toString() !="") {
 					ZhengQuanDaiMaSS sr = new ZhengQuanDaiMaSS();
 					for (Cell cell : row) {
 						// StringBuilder sb = new StringBuilder();
@@ -66,8 +66,13 @@ public class ZhengQuanDaiMaSSExcel {
 							case 3:
 								sr.setSHANGSHI_RI(value);
 								break;
-							case 4:							
-								sr.setTUISHI_RI(value);
+							case 4:	
+								if(value.length()==0) {
+									sr.setTUISHI_RI(null);
+								}else {
+									sr.setTUISHI_RI(value);
+								}
+								
 								break;
 							case 5:
 								sr.setZHUANRANG_FS(value);
@@ -103,7 +108,7 @@ public class ZhengQuanDaiMaSSExcel {
 			Sheet sheet = workbook.getSheetAt(page);
 
 			for (Row row : sheet) {
-				if (row.getRowNum() >= 1) {
+				if (row.getRowNum() >= 1 && row.getCell(0).toString() !="") {
 					InfoZhengQuanDaiMaSS sr = new InfoZhengQuanDaiMaSS();
 					for (Cell cell : row) {
 						// StringBuilder sb = new StringBuilder();

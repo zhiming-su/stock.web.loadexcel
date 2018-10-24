@@ -24,7 +24,7 @@ public class GongSiDaiMaExcel {
 			Sheet sheet = workbook.getSheetAt(page);
 
 			for (Row row : sheet) {
-				if (row.getRowNum() >= 1) {
+				if (row.getRowNum() >= 1 && row.getCell(0).toString() !="") {
 					GongSiDaiMa sr = new GongSiDaiMa();
 					for (Cell cell : row) {
 						// StringBuilder sb = new StringBuilder();
@@ -95,7 +95,7 @@ public class GongSiDaiMaExcel {
 			Sheet sheet = workbook.getSheetAt(page);
 
 			for (Row row : sheet) {
-				if (row.getRowNum() >= 1) {
+				if (row.getRowNum() >= 1 && row.getCell(0).toString() !="") {
 					InfoGongSiDaiMa sr = new InfoGongSiDaiMa();
 					for (Cell cell : row) {
 						// StringBuilder sb = new StringBuilder();

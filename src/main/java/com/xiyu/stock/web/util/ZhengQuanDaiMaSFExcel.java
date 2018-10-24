@@ -26,7 +26,7 @@ public class ZhengQuanDaiMaSFExcel {
 			Sheet sheet = workbook.getSheetAt(page);
 
 			for (Row row : sheet) {
-				if (row.getRowNum() >= 1) {
+				if (row.getRowNum() >= 1 && row.getCell(0).toString() !="") {
 					ZhengQuanDaiMaSF sr = new ZhengQuanDaiMaSF();
 					for (Cell cell : row) {
 						// StringBuilder sb = new StringBuilder();
@@ -106,7 +106,7 @@ public class ZhengQuanDaiMaSFExcel {
 			Sheet sheet = workbook.getSheetAt(page);
 
 			for (Row row : sheet) {
-				if (row.getRowNum() >= 1) {
+				if (row.getRowNum() >= 1 && row.getCell(0).toString() !="") {
 					InfoZhengQuanDaiMaSF sr = new InfoZhengQuanDaiMaSF();
 					for (Cell cell : row) {
 						// StringBuilder sb = new StringBuilder();

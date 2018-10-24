@@ -26,7 +26,8 @@ public class GongSiHangYeExcel {
 			Sheet sheet = workbook.getSheetAt(page);
 
 			for (Row row : sheet) {
-				if (row.getRowNum() >= 1) {
+				if (row.getRowNum() >= 1 && row.getCell(0).toString() !="") {
+					//System.out.println("__"+row.getCell(0)+"__\t");
 					GongSiHangYe sr = new GongSiHangYe();
 					for (Cell cell : row) {
 						// StringBuilder sb = new StringBuilder();
@@ -106,7 +107,7 @@ public class GongSiHangYeExcel {
 			Sheet sheet = workbook.getSheetAt(page);
 
 			for (Row row : sheet) {
-				if (row.getRowNum() >= 1) {
+				if (row.getRowNum() >= 1 && row.getCell(0).toString() !="") {
 					InfoGongSiHangYe sr = new InfoGongSiHangYe();
 					for (Cell cell : row) {
 						// StringBuilder sb = new StringBuilder();
