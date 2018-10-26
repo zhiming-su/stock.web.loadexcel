@@ -6,6 +6,7 @@ public class FileInfo {
 	private String status;
 	private String flag;
 	private String date;
+	private String log;
 	
 	public String getName() {
 		return name;
@@ -36,6 +37,12 @@ public class FileInfo {
 	}
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+	public String getLog() {
+		return log;
+	}
+	public void setLog(String log) {
+		this.log = log;
 	}
 	
 }

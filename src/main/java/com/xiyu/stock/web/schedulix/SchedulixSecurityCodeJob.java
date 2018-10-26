@@ -10,12 +10,15 @@ import java.util.ListIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import com.xiyu.stock.web.controller.UploadController;
 import com.xiyu.stock.web.model.FileInfo;
 import com.xiyu.stock.web.model.GongSiDaiMa;
+import com.xiyu.stock.web.model.InfoZhengQuanDaiMaSS;
+import com.xiyu.stock.web.model.ZhengQuanDaiMaSS;
 import com.xiyu.stock.web.repository.GongSiDaiMaRepository;
 import com.xiyu.stock.web.repository.GongSiHangYeRepository;
 import com.xiyu.stock.web.repository.InfoGongSiDaiMaRepository;
@@ -39,6 +42,9 @@ public class SchedulixSecurityCodeJob {
 	
 	//@Autowired
 	//private SecurityCodeRepository sjt;
+	
+	@Value("${stock.file.path}")
+	public  String UPLOADED_FOLDER;
 	
 	@Autowired
 	private GongSiHangYeRepository gshyr;
@@ -88,21 +94,33 @@ public class SchedulixSecurityCodeJob {
 					fi.setFlag("1");
 					lt.set(fi);
 					switch (fi.getFileType()) {
-					case "证券代码更新": 						
+					case "证券代码更新": 
+						ZhengQuanDaiMaSS zdInfo=null;
+						InfoZhengQuanDaiMaSS izdInfo=new InfoZhengQuanDaiMaSS();
 						try {
-							zqdmssr.saveAll(zqdmsse.read(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
-							izqdmssr.saveAll(zqdmsse.readInfo(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
+							for(ZhengQuanDaiMaSS zd:zqdmsse.read(Paths.get(UPLOADED_FOLDER + fi.getName()).toString())) {
+								zdInfo=zd;
+								zqdmssr.save(zd);
+							}
+							for(InfoZhengQuanDaiMaSS izd:zqdmsse.readInfo(Paths.get(UPLOADED_FOLDER + fi.getName()).toString())) {
+								izdInfo=izd;
+								izqdmssr.save(izd);
+							}
+							//zqdmssr.saveAll(zqdmsse.read(Paths.get(UPLOADED_FOLDER + fi.getName()).toString()));
+							//izqdmssr.saveAll(zqdmsse.readInfo(Paths.get(UPLOADED_FOLDER + fi.getName()).toString()));
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							fi.setStatus("更新失败");
+							//System.out.println("database: "+zdInfo.getZHENGQUAN_ID()+"   info: "+izdInfo.getZHENGQUAN_ID());
+							fi.setLog("database: "+zdInfo.getZHENGQUAN_ID()+"       info: "+izdInfo.getZHENGQUAN_ID());
 							lt.set(fi);
 							e1.printStackTrace();
 						}
 						break;
 					case "证券代码新增": 
 						try {
-							zqdmsfr.saveAll(zqdmsfe.read(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
-							izqdmsfr.saveAll(zqdmsfe.readInfo(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
+							zqdmsfr.saveAll(zqdmsfe.read(Paths.get(UPLOADED_FOLDER + fi.getName()).toString()));
+							izqdmsfr.saveAll(zqdmsfe.readInfo(Paths.get(UPLOADED_FOLDER + fi.getName()).toString()));
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							fi.setStatus("更新失败");
@@ -112,8 +130,8 @@ public class SchedulixSecurityCodeJob {
 						break;
 					case "公司行业分类": 
 						try {
-							gshyr.saveAll(gshye.read(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
-							igshyr.saveAll(gshye.readInfo(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
+							gshyr.saveAll(gshye.read(Paths.get(UPLOADED_FOLDER + fi.getName()).toString()));
+							igshyr.saveAll(gshye.readInfo(Paths.get(UPLOADED_FOLDER + fi.getName()).toString()));
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							fi.setStatus("更新失败");
@@ -123,7 +141,7 @@ public class SchedulixSecurityCodeJob {
 						break; 
 					case "公司代码更新": 
 						try {
-							ArrayList<GongSiDaiMa> al=(ArrayList<GongSiDaiMa>) gsdme.read(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString());
+							ArrayList<GongSiDaiMa> al=(ArrayList<GongSiDaiMa>) gsdme.read(Paths.get(UPLOADED_FOLDER + fi.getName()).toString());
 							
 							for(GongSiDaiMa gsInfo : al) {
 								//id.append("'"+gsInfo.getGONGSI_ID()+"',");
@@ -131,8 +149,8 @@ public class SchedulixSecurityCodeJob {
 								igsdmr.delByGongSiID(gsInfo.getGONGSI_ID());
 							}
 							//gsdmr.delByGongSiID(id.toString().replaceAll(",$", ""));
-							gsdmr.saveAll(gsdme.read(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
-							igsdmr.saveAll(gsdme.readInfo(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
+							gsdmr.saveAll(gsdme.read(Paths.get(UPLOADED_FOLDER + fi.getName()).toString()));
+							igsdmr.saveAll(gsdme.readInfo(Paths.get(UPLOADED_FOLDER + fi.getName()).toString()));
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							fi.setStatus("更新失败");
@@ -142,7 +160,7 @@ public class SchedulixSecurityCodeJob {
 						break; 
 
 					}
-					//sjt.saveAll(sce.read(Paths.get(UploadController.UPLOADED_FOLDER + fi.getName()).toString()));
+					//sjt.saveAll(sce.read(Paths.get(UPLOADED_FOLDER + fi.getName()).toString()));
 					logger.info(fi.getName()+"更新完成！");
 					fi.setStatus("更新完成");
 					

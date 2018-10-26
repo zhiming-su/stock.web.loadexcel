@@ -37,7 +37,7 @@ public class UploadController {
 	//private SecurityCodeExcel sce = new SecurityCodeExcel();
     //Save the uploaded file to this folder
 	@Value("${stock.file.path}")
-	public static String UPLOADED_FOLDER;
+	public  String UPLOADED_FOLDER;
 
     
     @RequestMapping(path = "/")
@@ -62,7 +62,7 @@ public class UploadController {
     }
     @PostMapping("/upload") // //new annotation since 4.3
     public String singleFileUpload(@RequestParam("type") String type,@RequestParam("file") MultipartFile file,RedirectAttributes redirectAttributes) throws FileNotFoundException, IOException {
-    	//System.out.println(type);
+    	//System.out.println(UPLOADED_FOLDER);
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
             return "redirect:uploadStatus";
